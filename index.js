@@ -22,21 +22,33 @@ io.on('connection', function(socket) {
 		
 		websites[urlObj.url].push(urlObj.player);
 
-		users[urlObj.url] = {
+		users[urlObj.player] = {
 			socket:socket,
 			url: urlObj.url,
 			shipData: undefined
 		} 
-		console.log(urlObj.url," array contains", websites[urlObj.url]);
+
+		console.log("stored user as:", users[urlObj.player]);
+
+		//tests if all users are being stored properly in the array and if their data as well as
+		//their socket is available
+		// console.log(urlObj.url," array contains", websites[urlObj.url]);
+		// for (var i = 0; i < websites[urlObj.url].length; i++) {
+		// 	console.log(users[websites[urlObj.url][i]]);
+		// }
 		// websites[playerUrl][player]
 	});
 	socket.on("playerLocation", function(playerObj) {
 		// console.log(playerObj);
 		//do I even need to store these?
+		console.log(playerObj);
+		console.log(users[playerObj.player]);
+		console.log(websites);
+
 		playerUrl = users[playerObj.player].url;
 		users[playerObj.player].shipData = playerObj;
 		for (var i = 0; i < websites[playerUrl].length; i++) {
-			websites[playerUrl][i].socket.emit('otherPlayerLocation', playerObj);
+			users[websites[playerUrl][i]].socket.emit('otherPlayerLocation', playerObj);
 		}
 	});
 	socket.on('discconect', function() {
