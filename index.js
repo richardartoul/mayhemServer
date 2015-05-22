@@ -8,6 +8,10 @@ var port = process.env.PORT || 3000;
 var websites = {};
 var users = {};
 
+app.get('/', function(req, res) {
+	res.send('<h1>Mayhem Server</h1>');
+});
+
 io.on('connection', function(socket) {
 	console.log("A user connected");
 	socket.on("playerUrl", function(urlObj) {
