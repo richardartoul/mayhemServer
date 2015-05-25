@@ -35,6 +35,16 @@ io.on('connection', function(socket) {
 			}
 		}
 	});
+	//refactor this with code above to be more dry.
+	socket.on("playerFired", function(playerObj) {
+		if(users[playerObj.player]) {
+			playerUrl = users[playerObj.player].url;
+			users[playerObj.player].shipData = playerObj;
+			for (var i = 0; i < websites[playerUrl].length; i++) {
+				users[websites[playerUrl][i]].socket.emit('otherPlayerFired', playerObj);
+			}
+		}
+	})
 	socket.on('discconect', function() {
 		console.log("A user disconected");
 	});
