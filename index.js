@@ -44,7 +44,7 @@ io.on('connection', function(socket) {
 				users[websites[playerUrl][i]].socket.emit('otherPlayerFired', playerObj);
 			}
 		}
-	})
+	});
 	socket.on('discconect', function() {
 		console.log("A user disconected");
 	});
